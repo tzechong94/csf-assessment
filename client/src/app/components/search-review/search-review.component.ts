@@ -27,13 +27,13 @@ export class SearchReviewComponent implements OnInit {
 
   createForm() {
     return this.fb.group({
-      movie: this.fb.control<string>('', [Validators.minLength(2), Validators.required, this.noWhitespaceValidator])
+      movie: this.fb.control<string>('', [Validators.minLength(2), Validators.required, Validators.pattern(/^\S.*\S$/)])
     })
   }
 
-  public noWhitespaceValidator(control: FormControl) {
-    const isSpace = (control.value || '').match(/\s/g);
-    return isSpace ? {'whitespace': true} : null;
-}
+//   public noWhitespaceValidator(control: FormControl) {
+//     const isSpace = (control.value || '').match(/\s/g);
+//     return isSpace ? {'whitespace': true} : null;
+// }
 
 }
