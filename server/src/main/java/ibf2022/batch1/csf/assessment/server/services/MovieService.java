@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ibf2022.batch1.csf.assessment.server.models.Comment;
 import ibf2022.batch1.csf.assessment.server.models.Review;
 import ibf2022.batch1.csf.assessment.server.repositories.MovieRepository;;
 
@@ -19,6 +20,10 @@ public class MovieService {
 	public List<Review> searchReviews(String query) {
 
 		return movieRepo.searchReviews(query);
+	}
+
+	public void postCommentByTitle(String title, Comment c) {
+		movieRepo.postCommentByTitle(title, c);
 	}
 
 

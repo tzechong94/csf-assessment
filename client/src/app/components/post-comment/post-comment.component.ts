@@ -14,7 +14,9 @@ export class PostCommentComponent implements OnInit {
   reviewTitle: string = ""
 
   form!: FormGroup
-
+  name!: string
+  rating!:number
+  comment!: string
   constructor(private location: Location, private fb: FormBuilder, private router: Router,
      private activatedRoute: ActivatedRoute, private movieSvc: MovieService){}
 
@@ -27,13 +29,18 @@ export class PostCommentComponent implements OnInit {
 
   postComment(){
     console.log('post comment')
-    const formData = new FormData();
-    formData.set("title", this.reviewTitle)
-    formData.set("name", this.form.get("name")!.value)
-    formData.set("rating", this.form.get("rating")!.value)
-    formData.set("comment", this.form.get("comment")!.value)
-    this.movieSvc.postComment(formData)
+    // const formData = new FormData();
+    this.name = this.form.value.name
+    this.rating = this.form.value.rating
+    this.comment = this.form.value.comment
+    this.movieSvc.postComment(this.reviewTitle, this.name, this.rating, this.comment)
+    // formData.set("title", this.reviewTitle)
+    // formData.set("name", this.form.get("name")!.value)
+    // formData.set("rating", this.form.get("rating")!.value)
+    // formData.set("comment", this.form.get("comment")!.value)
+    // this.movieSvc.postComment(formData)
     this.location.back()
+
 
   }
 

@@ -63,8 +63,8 @@ public class Review {
 		review.setReviewURL(obj.getJsonObject("link").getString("url"));
 		// System.out.println(review.getReviewURL());
 		if (obj.get("multimedia").getValueType() != ValueType.NULL) {
-			System.out.println(obj.get("multimedia").getValueType() + " multimedia");
-			System.out.println(obj.get("link").getValueType() + " multimedia link");
+			// System.out.println(obj.get("multimedia").getValueType() + " multimedia");
+			// System.out.println(obj.get("link").getValueType() + " multimedia link");
 
 			review.setImage(obj.getJsonObject("multimedia").getString("src"));
 		} 

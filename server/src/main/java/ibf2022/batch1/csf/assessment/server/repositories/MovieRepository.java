@@ -4,10 +4,16 @@ import java.io.StringReader;
 import java.util.Collections;
 import java.util.List;
 
+import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.aggregation.Aggregation;
+import org.springframework.data.mongodb.core.aggregation.AggregationResults;
+import org.springframework.data.mongodb.core.aggregation.MatchOperation;
+import org.springframework.data.mongodb.core.aggregation.ProjectionOperation;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +21,9 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.mongodb.client.result.UpdateResult;
+
+import ibf2022.batch1.csf.assessment.server.models.Comment;
 import ibf2022.batch1.csf.assessment.server.models.Review;
 import jakarta.json.Json;
 import jakarta.json.JsonArray;
@@ -82,21 +91,80 @@ public class MovieRepository {
 	//
 	public int countComments(String title) {
 		Criteria criteria = Criteria.where("title").is(title);
-		Query query = Query.query(criteria);
-		List<String> comments = template.find(query, String.class, "comments");
-		int commentCount = comments.size();
+		int commentCount = 0;
+
+		MatchOperation matchTitle = Aggregation.match(criteria);
+
+		ProjectionOperation projectField = Aggregation.project("comments")
+			.andExclude("_id");
+
+		Aggregation pipeline = Aggregation.newAggregation(matchTitle, projectField);
+
+		AggregationResults<Document> results = 
+			template.aggregate(pipeline, "comments", Document.class);
+
+		List<Document> resultsDoc = results.getMappedResults();
+
+		if (results.getMappedResults().size() != 0) {
+			Document result = resultsDoc.get(0);
+
+			System.out.println(result.toJson() + " DOCUMENT TO JSON");
+			// List<Comment> commentList = result.getList("comments", Comment.class);
+			JsonReader reader = Json.createReader(new StringReader(result.toJson()));
+			JsonObject resultObject = reader.readObject();
+			JsonArray jsonArr = resultObject.getJsonArray("comments");
+			commentCount = jsonArr.size();
+
+			System.out.println(commentCount + "COMMENT Count");
+
+		}
+
 		return commentCount;
-		// aggregation -> db.comments.aggregate([
-		//   { $match: { title: "dogfather" } },
-		//   { $project: { numComments: { $size: "$comments" } } }
+
+// MONGO QUERY HERE --------------------
+		// db.comments.aggregate([
+		// {
+		// 	$match: { "title": "Pretty Baby: Brooke Shields"}
+		// },
+		// {
+		// 	$project: { _id: 0, comments: 1}
+		// }
 		// ])
-		// i get the array and find the size instead
-		// db.comments.findOne({ title: "dogfather" }, { comments: 1, _id: 0 })
+// MONGO QUERY END --------------------
+
 	}
+
+
 
 
 	// TODO: Task 8
 	// Write a method to insert movie comments comments collection
+	public void postCommentByTitle(String title, Comment c) {
+		Criteria criteria = Criteria.where("title").is(title);
+		Query query = Query.query(criteria);
+		Update updateOps = new Update().push("comments", c);
+		UpdateResult updateResult = template.upsert(query, updateOps, "comments");
+		if (updateResult == null) {
+			System.out.println("not updated");
+		}
+		else {
+			System.out.println(updateResult.getUpsertedId() + " document(s) updated..");
+		}
+
+	
+	}	
+
 	// Write the native mongo database query in the comment below
-	//
+	// MONGO QUERY HERE ---------------------------------
+	// db.comments.updateOne(
+	// 	{"title": "Pretty Baby: Brooke Shields"},
+	// 	 { $push: {comments: {
+	// 		name: "john",
+	// 		rating: 5,
+	// 		comment: "good"
+	// 	} } },
+	// 	{ upsert: true}
+	// )
+	
+		
 }
