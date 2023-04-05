@@ -19,16 +19,6 @@ export class MovieService {
   }
 
 
-  // postComment(formData: FormData){
-  //   let options = {
-  //     headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
-  //   }
-  
-  //   return firstValueFrom(
-  //     this.http.post("/api/comment", formData, options)
-  //   )
-  // }
-
   postComment(title:string, name:string, rating:number, comment:string){
     let body = new HttpParams()
             .set("title", title)

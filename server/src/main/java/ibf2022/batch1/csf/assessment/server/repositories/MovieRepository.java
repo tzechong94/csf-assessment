@@ -115,13 +115,14 @@ public class MovieRepository {
 			JsonArray jsonArr = resultObject.getJsonArray("comments");
 			commentCount = jsonArr.size();
 
-			System.out.println(commentCount + "COMMENT Count");
+			// System.out.println(commentCount + "COMMENT Count");
 
 		}
 
 		return commentCount;
-
-// MONGO QUERY HERE --------------------
+	}
+// MONGO QUERY 1 --------------------
+// I get the array then I get the size.
 		// db.comments.aggregate([
 		// {
 		// 	$match: { "title": "Pretty Baby: Brooke Shields"}
@@ -130,9 +131,20 @@ public class MovieRepository {
 		// 	$project: { _id: 0, comments: 1}
 		// }
 		// ])
-// MONGO QUERY END --------------------
+// MONGO QUERY 1 END --------------------
 
-	}
+// can also use this to return the count directly, but i didn't
+// db.comments.aggregate([
+// {
+// 	$match: { "title": "Pretty Baby: Brooke Shields"}
+// },
+// {
+// 	$project: { _id: 0, count: { $size: "$comments"}
+// 	}
+// }
+// ])
+
+	
 
 
 
