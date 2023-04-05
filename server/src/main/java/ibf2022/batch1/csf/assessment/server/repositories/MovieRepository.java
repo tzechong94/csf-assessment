@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.aggregation.AggregationResults;
@@ -37,7 +38,9 @@ public class MovieRepository {
 	@Autowired
 	private MongoTemplate template;
 
-	private String apikey = "QKe1w5m2Vpz30mcyLTP4xdQGyCVDx5Y2";
+	@Value("${apikey}")
+    private String apikey;
+	
     public static final String MOVIE_REVIEWS_API = "https://api.nytimes.com/svc/movies/v2/reviews/search.json";
 
 

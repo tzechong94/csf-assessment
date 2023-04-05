@@ -55,4 +55,15 @@ public class MovieController {
 
 		return null;
 	}
+
+	@GetMapping("/")
+    public String index() {
+      return "index.html";
+    }
+
+    @GetMapping("/{path:[^\\.]*}")
+    public String redirect() {
+      return "forward:/";
+    }
+
 }
