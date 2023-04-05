@@ -17,4 +17,10 @@ export class MovieService {
 
     return firstValueFrom(this.http.get("/api/search", { params }))
   }
+
+  postComment(formData: FormData){
+    return firstValueFrom(
+      this.http.post("/api/comment", formData)
+    )
+  }
 }

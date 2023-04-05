@@ -7,12 +7,14 @@ import { AppComponent } from './app.component';
 import { SearchReviewComponent } from './components/search-review/search-review.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MovieReviewsListComponent } from './components/movie-reviews-list/movie-reviews-list.component';
+import { PostCommentComponent } from './components/post-comment/post-comment.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SearchReviewComponent,
-    MovieReviewsListComponent
+    MovieReviewsListComponent,
+    PostCommentComponent
   ],
   imports: [
     BrowserModule,

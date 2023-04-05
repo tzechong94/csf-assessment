@@ -20,11 +20,11 @@ export class MovieReviewsListComponent implements OnInit {
         .then(response => {
           this.reviews = response as Review[]
 
-          if (this.reviews.length === 0){
-            this.noresult = "Your search produces no result"
-          } else {
+          // if (this.reviews.length === 0){
+          //   this.noresult = "Your search produces no result"
+          // } else {
             this.noresult = ""
-          }      
+          // }      
         })
         .catch((err)=>{
           console.log(err)
@@ -32,6 +32,10 @@ export class MovieReviewsListComponent implements OnInit {
           console.log(this.noresult)
         })
 
+  }
+
+  comment(reviewTitle: string) {
+    this.router.navigate(["/comment/" + reviewTitle])
   }
 
 }

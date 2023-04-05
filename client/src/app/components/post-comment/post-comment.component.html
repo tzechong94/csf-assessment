@@ -1,0 +1,33 @@
+<h2>Post Comment for {{reviewTitle}}</h2>
+
+<form [formGroup]="form" (submit)="postComment()">
+    <table>
+        <tr>
+            <td>Name: </td>
+            <td>
+                <input type="text" formControlName="name">
+            </td>
+        </tr>
+        <tr>
+            <td>Rating: </td>
+            <td>
+                <input formControlName="rating" step="1" type="number" min="1" max="5">
+            </td>
+        </tr>
+        <tr>
+            <td>Comment: </td>
+            <td>
+                <input type="text" formControlName="comment">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <button type="button" [routerLink]="['/list']">Back</button>
+            </td>
+            <td>
+                <button type="submit" [disabled]="form.invalid">Post</button>
+            </td>
+        </tr>
+
+    </table>
+</form>

@@ -22,7 +22,7 @@
             <h3>{{review.headline}}</h3>
             <p>{{review.summary}}</p>
             <p>Comments: {{review.commentCount}}</p>
-            <button type="button">Comment</button>
+            <button type="button" (click)="comment(review.title)">Comment</button>
         </div>
     </div>
 </div>
