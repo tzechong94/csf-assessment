@@ -1,0 +1,32 @@
+<table>
+    <tr>
+        <td><h1>Search Results</h1></td>
+        <td>
+            <button type="button" [routerLink]="['']">Back</button>
+        </td>
+    </tr>
+</table>
+
+<div *ngIf="reviews">
+    <div *ngFor="let review of reviews" class="container">
+        <div *ngIf="review.image; else elseBlock">
+            <img src="{{review.image}}" class="movie-image">
+        </div>
+        <ng-template #elseBlock>
+            <img class="movie-image" src="../../../assets/images/placeholder.jpg">
+        </ng-template>
+        <div class="movie-details">
+            <a href={{review.reviewURL}}>
+                <h2>{{review.title}} {{review.rating}}</h2>
+            </a>
+            <h3>{{review.headline}}</h3>
+            <p>{{review.summary}}</p>
+            <p>Comments: {{review.commentCount}}</p>
+            <button type="button">Comment</button>
+        </div>
+    </div>
+</div>
+
+<div>
+    <h2>{{noresult}}</h2>
+</div>

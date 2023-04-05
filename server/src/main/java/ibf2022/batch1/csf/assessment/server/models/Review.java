@@ -1,5 +1,8 @@
 package ibf2022.batch1.csf.assessment.server.models;
 
+import jakarta.json.JsonObject;
+import jakarta.json.JsonValue.ValueType;
+
 // DO NOT MODIFY THIS CLASS
 public class Review {
 	// display_title
@@ -48,5 +51,23 @@ public class Review {
 	@Override
 	public String toString() {
 		return "Review{title:%s, rating:%s}".formatted(title, rating);
+	}
+
+	public static Review toReview(JsonObject obj) {
+		Review review = new Review();
+		review.setTitle(obj.getString("display_title"));
+		review.setRating(obj.getString("mpaa_rating"));
+		review.setByline(obj.getString("byline"));
+		review.setHeadline(obj.getString("headline"));
+		review.setSummary(obj.getString("summary_short"));
+		review.setReviewURL(obj.getJsonObject("link").getString("url"));
+		// System.out.println(review.getReviewURL());
+		if (obj.get("multimedia").getValueType() != ValueType.NULL) {
+			System.out.println(obj.get("multimedia").getValueType() + " multimedia");
+			System.out.println(obj.get("link").getValueType() + " multimedia link");
+
+			review.setImage(obj.getJsonObject("multimedia").getString("src"));
+		} 
+		return review;
 	}
 }

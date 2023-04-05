@@ -1,0 +1,13 @@
+.container {
+    display: flex;
+    border: solid;
+    margin-bottom: 5px;
+}
+
+.movie-image {
+    height: 200px
+}
+
+.movie-details {
+    margin: 20px;
+}

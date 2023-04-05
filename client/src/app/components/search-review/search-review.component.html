@@ -1,0 +1,18 @@
+<h1>Search Movie Reviews</h1>
+
+<form [formGroup]="form" (submit)="searchByMovie()">
+    <table>
+        <tr>
+            <td>Movie name:</td>
+            <td>
+                <input formControlName="movie">
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <button type="submit" [disabled]="form.invalid">Search</button>
+            </td>
+        </tr>
+    </table>
+</form>
